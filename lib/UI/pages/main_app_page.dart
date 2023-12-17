@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class MainAppPage extends StatelessWidget {
+  const MainAppPage({super.key});
 
   void intercambiarPosiciones(
       int indiceValorACambiar, int indice, List<int> resultado) {
@@ -46,15 +46,13 @@ class MainApp extends StatelessWidget {
       displayMsg(resultado);
     }
 
-    return MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: ListView.builder(
-            itemCount: infoWidget.length,
-            itemBuilder: (context, index) {
-              return infoWidget[index];
-            },
-          ),
+    return Scaffold(
+      body: Center(
+        child: ListView.builder(
+          itemCount: infoWidget.length,
+          itemBuilder: (context, index) {
+            return infoWidget[index];
+          },
         ),
       ),
     );
