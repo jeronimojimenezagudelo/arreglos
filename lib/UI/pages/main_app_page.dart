@@ -15,18 +15,20 @@ class MainApp extends StatelessWidget {
       home: Scaffold(
         body: Center(
           child: FutureBuilder<List<Widget>>(
-            future: mainAppController.generarlistaDeWidgets(8800),
+            future: mainAppController.generarlistaDeWidgets(1200),
             builder: (_, AsyncSnapshot<List<Widget>> snapshot) {
-              final List<Widget>? children = snapshot.data;
+              if (snapshot.hasData && !snapshot.hasError) {
+                final List<Widget>? children = snapshot.data;
 
-              if (children != null) {
-                if (children.isNotEmpty) {
-                  return ListView.builder(
-                    itemCount: children.length,
-                    itemBuilder: (context, index) {
-                      return children[index];
-                    },
-                  );
+                if (children != null) {
+                  if (children.isNotEmpty) {
+                    return ListView.builder(
+                      itemCount: children.length,
+                      itemBuilder: (context, index) {
+                        return children[index];
+                      },
+                    );
+                  }
                 }
               }
 
