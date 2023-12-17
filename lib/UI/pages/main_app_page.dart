@@ -1,42 +1,66 @@
-import 'package:arreglos/business/controllers/main_app_controller.dart';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
-class MainApp extends StatelessWidget {
-  const MainApp({
-    super.key,
-    required this.mainAppController,
-  });
+class MainAppPage extends StatelessWidget {
+  const MainAppPage({super.key});
 
-  final MainAppController mainAppController;
+  void intercambiarPosiciones(
+      int indiceValorACambiar, int indice, List<int> resultado) {
+    final valorAnterior = resultado[indiceValorACambiar];
+    resultado[indiceValorACambiar] = resultado[indice];
+    resultado[indice] = valorAnterior;
+    // return resultado;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: FutureBuilder<List<Widget>>(
-            future: mainAppController.generarlistaDeWidgets(1200),
-            builder: (_, AsyncSnapshot<List<Widget>> snapshot) {
-              if (snapshot.hasData && !snapshot.hasError) {
-                final List<Widget>? children = snapshot.data;
+    final DateTime dateTime = DateTime.now();
+    const List<int> ejercicioUno = <int>[-2, 16, 2, 5, -6, 10];
+    //final List<int> ejercicioUno = generarNumerosAleatorios(100);
+    //final List<int> ejercicioUno = generarNumerosAleatorios(100);
 
-                if (children != null) {
-                  if (children.isNotEmpty) {
-                    return ListView.builder(
-                      itemCount: children.length,
-                      itemBuilder: (context, index) {
-                        return children[index];
-                      },
-                    );
-                  }
-                }
-              }
+    final List<int> resultado = <int>[...ejercicioUno];
+    final List<Widget> infoWidget = <Widget>[];
 
-              return const CircularProgressIndicator();
-            },
-          ),
+    void displayMsg(dynamic msg) {
+      infoWidget.add(
+        Text('(${DateTime.now().difference(dateTime).inMilliseconds}) => $msg'),
+      );
+    }
+
+    displayMsg('$dateTime => $ejercicioUno');
+
+    for (int index = 0; index < ejercicioUno.length; index++) {
+      int indice = index;
+
+      for (int iteracion = index + 1;
+          iteracion < resultado.length;
+          iteracion++) {
+        if (resultado[indice] > resultado[iteracion]) {
+          displayMsg('INTERCAMBIA');
+          indice = iteracion;
+        }
+      }
+      intercambiarPosiciones(index, indice, resultado);
+      displayMsg(resultado);
+    }
+
+    return Scaffold(
+      body: Center(
+        child: ListView.builder(
+          itemCount: infoWidget.length,
+          itemBuilder: (context, index) {
+            return infoWidget[index];
+          },
         ),
       ),
     );
   }
+}
+
+List<int> generarNumerosAleatorios(int lim) {
+  Random random = Random();
+  List<int> numeros = List.generate(lim, (_) => random.nextInt(20001) - 10000);
+  return numeros;
 }
