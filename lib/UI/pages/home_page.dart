@@ -46,7 +46,6 @@ class HomePage extends StatelessWidget {
 
 class _ListTile extends StatelessWidget {
   const _ListTile({
-    super.key,
     required this.page,
     required this.title,
   });
