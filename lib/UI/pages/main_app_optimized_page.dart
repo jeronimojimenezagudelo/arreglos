@@ -1,8 +1,8 @@
 import 'package:arreglos/business/controllers/main_app_controller.dart';
 import 'package:flutter/material.dart';
 
-class MainAppPage extends StatelessWidget {
-  const MainAppPage({
+class MainAppOptimizedPage extends StatelessWidget {
+  const MainAppOptimizedPage({
     super.key,
     this.cantidadElementosAOrdenar = 8800,
     required this.mainAppController,
@@ -15,12 +15,12 @@ class MainAppPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Ordenando con la funcion ineficiente'),
+        title: const Text('Ordenando con la funcion eficiente'),
       ),
       body: Center(
         child: FutureBuilder<List<Widget>>(
-          future: mainAppController
-              .generarlistaDeWidgets(cantidadElementosAOrdenar),
+          future: mainAppController.generarlistaDeWidgets(
+              cantidadElementosAOrdenar, true),
           builder: (_, AsyncSnapshot<List<Widget>> snapshot) {
             final List<Widget>? children = snapshot.data;
 
